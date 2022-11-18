@@ -1,7 +1,7 @@
 # Quantori Python School Final Project
 
 
-# Project Description
+### Project Description
 
 - [x] Transcription of DNA to RNA and RNA to amino
 - [x] Written classes for the database
@@ -9,11 +9,11 @@
 - [ ] Unit tests
 - [ ] Docker
 
-# How to Install and Run the Project
+### How to Install and Run the Project
 
 pass
 
-# How to Use the Project
+### How to Use the Project
 
 pass
 
