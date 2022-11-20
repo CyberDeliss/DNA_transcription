@@ -17,9 +17,8 @@ pass
 ### How to Use the Project
 
 1. from this directory type this to concole:
-
-source venv/bin/activate 
-uvicorn main:app --reload
+- source venv/bin/activate
+- uvicorn main:app --reload
 
 2. open index.html
 3. type DNA to DNA line
