@@ -7,13 +7,13 @@
 </head>
 <body>
 <div class="container">
-    <form class="form">
+    <form id="all_inputs" class="form">
         <label>DNA
-            <input type="text" placeholder="ATTTGGCTACTAACAATCTA"></label>
+            <input id="dna_id" name="dna_string" type="text" placeholder="ATTTGGCTACTAACAATCTA"></label>
         <label>RNA
-            <input type="text" placeholder="AUUUGGCUACUAACAAUCUA"></label>
+            <input id="rna_id" name="rna_string" type="text" placeholder="AUUUGGCUACUAACAAUCUA" readonly></label>
         <label>Protein
-            <input type="text" placeholder="IWLLTI"></label>
+            <input id="protein_id" name="protein_string" type="text" placeholder="IWLLTI" readonly></label>
         <button type="button" id="ajaxButton" class="button">PUSH ME</button>
     </form>
 </div>
