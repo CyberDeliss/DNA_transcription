@@ -1,7 +1,7 @@
 from data.genetic_codes import *
 from data.base_classes import *
 from utilities import *
-from fastapi import FastAPI
+from fastapi import FastAPI, Form
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -28,7 +28,10 @@ app.add_middleware(
 
 
 @app.post("/")
-async def root():
-    return {"message": "Hello World"}
+async def root(dna_string: str = Form()):
+    rna = convert_dna_to_rna(dna_string)
+    protein = convert_rna_to_protein(rna, genetic_code)
+    return {"rna": rna, "protein": protein}
 
+    # return {"message": "Hello World"}
 # type to console "uvicorn main:app --reload"
