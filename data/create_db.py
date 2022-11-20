@@ -1,26 +1,35 @@
-from genetic_codes import *
-from base_classes import *
-
+from genetic_codes import GENETIC_CODE_MIDDLE, AMINO_FULL_NAME
+from base_classes import DnaBase, RnaBase, AminoAcids, Codons
+# from sqlalchemy import create_engine
+# from sqlalchemy.orm import sessionmaker
+# engine = create_engine("sqlite:///my_base.db")
+# session = sessionmaker(bind = engine)
 
 
 dna_bases = []
 temp_id = 0
 for letter in "ACGT":
     temp_id += 1
-    dna_bases.append(Dna_base(id=temp_id, name=letter))
+    dna_bases.append(DnaBase(id=temp_id, name=letter))
 
 temp_id = 0
 rna_bases = []
 for letter in "ACGU":
     temp_id += 1
-    rna_bases.append(Rna_base(id=temp_id, name=letter))
+    rna_bases.append(RnaBase(id=temp_id, name=letter))
 
 temp_id = 0
 aminos = []
-for key in list(AMINO_LETTERS.keys()):
+for key in list(AMINO_FULL_NAME.keys()):
     temp_id += 1
     aminos.append(
-        Amino_acids(id=temp_id, short_name=AMINO_LETTERS.get(key), middle_name=key.capitalize(), full_name=""))
+        AminoAcids(
+            id=temp_id,
+            short_name=key.capitalize(),
+            middle_name=AMINO_FULL_NAME.get(key)[0].capitalize(),
+            full_name=AMINO_FULL_NAME.get(key)[1].title()
+        )
+    )
 
 for dna in dna_bases:
     for rna in rna_bases:
@@ -46,7 +55,7 @@ for x in LETTERS:
 
 for codon in codons:
     for amino in aminos:
-        if genetic_code[str(codon.name)].capitalize() == str(amino.middle_name):
+        if GENETIC_CODE_MIDDLE[str(codon.name)].capitalize() == str(amino.middle_name):
             # codon.amino_id = amino.id
             # codon.amino = amino
             amino.amino_codons.append(codon)
