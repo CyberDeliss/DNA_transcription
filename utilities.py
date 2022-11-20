@@ -1,18 +1,17 @@
-def convert_dna_to_rna(dna_string):
+def convert_dna_to_rna(dna_string: str) -> str:
     """
-    convert DNA to RNA
-    :param dna_string:
-    :return: rna string
+    replace T in DNA to U in RNA
+    :param dna_string: dna as string
+    :return: rna as string
     """
     return dna_string.replace("T", "U")
 
 
-def convert_rna_to_protein(rna_string, genetic_code):
+def convert_rna_to_protein(rna_string: str, genetic_code: dict) -> str:
     """
-
-    :param rna_string: RNA like string
-    :param genetic_code: dictionary, where keys are
-    :return:
+    :param rna_string: RNA as str
+    :param genetic_code: dictionary, where keys are codons
+    :return: protein as letters
     """
     result_string = ""
     n = 3
