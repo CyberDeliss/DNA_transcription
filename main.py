@@ -1,21 +1,10 @@
 from data.genetic_codes import *
 from data.base_classes import *
-from utilities import *
+from utilities import convert_dna_to_rna, convert_rna_to_protein
 from fastapi import FastAPI, Form
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
-
-genetic_code = dict_reverse_from_list(GENETIC_CODE)
-print(genetic_code)
-genetic_code = change_amino_to_letters(genetic_code, AMINO_LETTERS)
-print(genetic_code)
-
-my_result = []
-for dna in DNA:
-    temp_rna = convert_dna_to_rna(dna)
-    my_result.append(convert_rna_to_protein(temp_rna, genetic_code))
-
 
 # for allow CORS requests
 app.add_middleware(
@@ -30,8 +19,7 @@ app.add_middleware(
 @app.post("/")
 async def root(dna_string: str = Form()):
     rna = convert_dna_to_rna(dna_string)
-    protein = convert_rna_to_protein(rna, genetic_code)
+    protein = convert_rna_to_protein(rna, GENETIC_CODE_REVERSE)
     return {"rna": rna, "protein": protein}
 
-    # return {"message": "Hello World"}
 # type to console "uvicorn main:app --reload"
