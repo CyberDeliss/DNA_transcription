@@ -1,10 +1,6 @@
-from genetic_codes import GENETIC_CODE_MIDDLE, AMINO_FULL_NAME
-from base_classes import DnaBase, RnaBase, AminoAcids, Codons
-# from sqlalchemy import create_engine
-# from sqlalchemy.orm import sessionmaker
-# engine = create_engine("sqlite:///my_base.db")
-# session = sessionmaker(bind = engine)
-
+from data.genetic_codes import GENETIC_CODE_MIDDLE, AMINO_FULL_NAME
+from data.base_classes import DnaBase, RnaBase, AminoAcids, Codons
+from data.db import Base, engine, Session
 
 dna_bases = []
 temp_id = 0
@@ -56,12 +52,26 @@ for x in LETTERS:
 for codon in codons:
     for amino in aminos:
         if GENETIC_CODE_MIDDLE[str(codon.name)].capitalize() == str(amino.middle_name):
-            # codon.amino_id = amino.id
-            # codon.amino = amino
             amino.amino_codons.append(codon)
             amino.codon_id = codon.id
 
-for amino in aminos:
-    print(amino.id)
-    for codon in list(amino.amino_codons):
-        print(codon)
+
+# Later I should change it to import os
+try:
+    f = open("my_base.db")
+    f.close()
+except FileNotFoundError:
+    Base.metadata.create_all(engine)
+    with Session() as session:
+        for dna_base in dna_bases:
+            session.add(dna_base)
+
+        for rna_base in rna_bases:
+            session.add(rna_base)
+
+        for amino in aminos:
+            session.add(amino)
+
+        for codon in codons:
+            session.add(codon)
+        session.commit()
