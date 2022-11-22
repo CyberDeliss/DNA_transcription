@@ -1,8 +1,8 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy import ForeignKey
-from sqlalchemy.orm import declarative_base, relationship, backref
-
-Base = declarative_base()
+from sqlalchemy.future import select
+from sqlalchemy.orm import relationship, backref
+from data.db import Base, Session
 
 
 class DnaBase(Base):
@@ -11,7 +11,7 @@ class DnaBase(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(1))
-    rna = relationship("RnaBase", backref=backref("rna_base", uselist=False))
+    rna = relationship("RnaBase", backref=backref("dna", uselist=False))
     rna_id = Column(Integer, ForeignKey("rna_base.id"))
 
     def __str__(self):
@@ -24,9 +24,6 @@ class RnaBase(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(1))
-
-    # dna = relationship("DnaBase")
-    # dna_id = Column(Integer, ForeignKey("dna_base.id"))
 
     def __str__(self):
         return f"{self.name}"
@@ -56,3 +53,51 @@ class Codons(Base):
 
     def __str__(self):
         return f'{self.name}'
+
+
+def convert_dna_letter_to_rna_letter(db: Session, dna_letter: str) -> RnaBase:
+    """
+    :param db: The session, which was opened
+    :param dna_letter: one letter from DNA string
+
+    :return: rna as RnaBase object
+    """
+    return db.execute(select(RnaBase).join_from(DnaBase, RnaBase).filter(DnaBase.name == dna_letter)).scalar()
+
+
+def convert_codon_to_amino(db: Session, codon: str) -> AminoAcids:
+    """
+    :param db: The session, which was opened
+    :param codon: one codon as str
+
+    :return: amino as AminoAcids object
+    """
+    if len(codon) == 3:
+        return db.execute(select(AminoAcids).join_from(Codons, AminoAcids).filter(Codons.name == codon)).scalar()
+
+
+def convert_dna_to_rna(db: Session, dna_string: str) -> str:
+    result_str = ""
+    for dna in dna_string:
+        result_str += convert_dna_letter_to_rna_letter(db, dna).name
+    return result_str
+
+
+def convert_rna_to_protein(db: Session, rna_string: str) -> str:
+    """
+    :param db: The session, which was opened
+    :param rna_string: RNA as str
+    :return: protein string
+    """
+    result_string = ""
+    n = 3
+    parts = [rna_string[i:i + n] for i in range(0, len(rna_string), n)]
+    for codon in parts:
+        if len(codon) == 3:
+            result_string += convert_codon_to_amino(db, codon).short_name
+    return result_string
+#
+# print(convert_dna_letter_to_rna_letter(Session(), "T").name)
+# print(convert_codon_to_amino(Session(), "UGC").full_name)
+# print(convert_dna_to_rna(Session(), "ATTTGGCTACTAACAATCTA"))
+# print(convert_rna_to_protein(Session(), "GUUGUAAUGGCCUACAUUA"))
