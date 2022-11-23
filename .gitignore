@@ -132,3 +132,4 @@ dmypy.json
 .idea/
 *.db
 personal_data
+plot_gc_ratio.png
