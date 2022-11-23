@@ -64,7 +64,6 @@ def plot_gc_ratio(genome: str, step: int) -> None:
     coords = []
 
     parts = [genome[i:i + step] for i in range(0, len(genome), step)]
-    print(parts)
     for genome_selected in parts:
         count_g = 0
         count_c = 0
@@ -75,7 +74,6 @@ def plot_gc_ratio(genome: str, step: int) -> None:
                 count_c += 1
         coords.append((x_coord, gc_content(count_g, count_c, len(genome_selected))))
         x_coord += step
-    print(coords)
     create_img(coords)
 
 
@@ -98,4 +96,3 @@ def create_img(coords: list, path=r"plot_gc_ratio.png") -> None:
 
     ax.grid()
     fig.savefig(path)
-    plt.show()
