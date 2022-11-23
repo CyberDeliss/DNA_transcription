@@ -58,7 +58,7 @@ for codon in codons:
 
 # Later I should change it to import os
 try:
-    f = open("my_base.db")
+    f = open("data/my_base.db")
     f.close()
 except FileNotFoundError:
     Base.metadata.create_all(engine)
