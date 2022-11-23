@@ -1,3 +1,7 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+
 def convert_dna_to_rna(dna_string: str) -> str:
     """
     replace T in DNA to U in RNA
@@ -56,7 +60,8 @@ def plot_gc_ratio(genome: str, step: int) -> None:
         .png | .jpeg file.
         graph
     """
-    gc_ratio = []
+    x_coord = 0
+    coords = []
 
     parts = [genome[i:i + step] for i in range(0, len(genome), step)]
     print(parts)
@@ -68,9 +73,29 @@ def plot_gc_ratio(genome: str, step: int) -> None:
                 count_g += 1
             if letter.title() == "C":
                 count_c += 1
-        gc_ratio.append(gc_content(count_g, count_c, len(genome_selected)))
-    print(gc_ratio)
+        coords.append((x_coord, gc_content(count_g, count_c, len(genome_selected))))
+        x_coord += step
+    print(coords)
+    create_img(coords)
 
 
+def create_img(coords: list, path=r"plot_gc_ratio.png") -> None:
+    fig, ax = plt.subplots()
 
+    x_list = []
+    y_list = []
+    for x, y in coords:
+        x_list.append(x)
+        y_list.append(y)
 
+    x_array = np.asarray(x_list)
+    y_array = np.asarray(y_list)
+
+    ax.plot(x_array, y_array)
+    ax.set_xlabel('Genome position')
+    ax.set_ylabel('GC-content(%)')
+    ax.set_title("Guanine-cytosine content distribution")
+
+    ax.grid()
+    fig.savefig(path)
+    plt.show()
