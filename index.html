@@ -14,8 +14,20 @@
             <input id="rna_id" name="rna_string" type="text" placeholder="AUUUGGCUACUAACAAUCUA" readonly></label>
         <label>Protein
             <input id="protein_id" name="protein_string" type="text" placeholder="IWLLTI" readonly></label>
-        <button type="button" id="ajaxButton" class="button">PUSH ME</button>
+        <button type="button" id="ajaxButton" class="button">GET PROTEIN</button>
     </form>
+</div>
+<div class="container2">
+    <form id="form_gc" class="form_gc">
+        <label>DNA
+            <textarea id="gc_dna" name="for_plot_string" type="text" rows="4" cols="53"
+                      placeholder="ATTTGGCTACTAACAATCTAGTTGTAATGGCCTACATTACAG"></textarea></label>
+        <label>Step
+            <input id="step_id" name="step" type="text" placeholder="10"></label>
+    </form>
+    <img id="plot_img" src="empty_plot.png" class="plot_img">
+    <button type="button" id="plotButton" class="button">GET PLOT</button>
+
 </div>
 <img src="images/background.jpg" class="background">
 <script src="ajax.js"></script>
