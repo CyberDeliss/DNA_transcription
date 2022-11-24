@@ -11,7 +11,7 @@ function makeRequest() {
     const formData = new FormData(all_inputs);
 
     httpRequest.onreadystatechange = getProtein;
-    httpRequest.open("POST", "http://127.0.0.1:8000");
+    httpRequest.open("POST", "http://127.0.0.1:8000/dna_to_rna/");
     httpRequest.send(formData);
 }
 
