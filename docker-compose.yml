@@ -4,45 +4,52 @@ services:
 
   nginx:
     container_name: nginx
-    build: ./nginx
+    build:
+      context: ./nginx/
+      dockerfile: Dockerfile
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - ./nginx/images:/usr/share/nginx/html/images/
+#    expose:
+#      - 80
+#      - 443
+    depends_on:
+      - fastapi
+    networks:
+      - my_network
 
   db:
     container_name: postgres
     build:
-      context: ./postgres_docker
+      context: ./postgres_docker/
       dockerfile: Dockerfile
     environment:
       POSTGRES_PASSWORD: postgres
+    expose:
+      - 5432
     ports:
-      - 5432:5432
-#    expose:
-#      - 5432
+      - "5432:5432"
     networks:
-      - default
+      - my_network
 
-  web:
+  fastapi:
     container_name: fastapi
     build:
       context: ./
       dockerfile: Dockerfile
     volumes:
       - ./nginx/images:/code/images/
-#    expose:
-#      - 8000
-#    env_file:
-#      - ./.env.prod
     depends_on:
       - db
+#    expose:
+#      - 8000
     ports:
-      - 8000:8000
+      - "8000:8000"
     networks:
-      - default
+      - my_network
 
 networks:
-  default:
-    driver: host
+  my_network:
+    driver: bridge
