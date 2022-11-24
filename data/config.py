@@ -1,0 +1,5 @@
+USER = "postgres"
+PASSWORD = "postgres"
+HOST = "db"
+PORT = "5432"
+DB_NAME = "dna_transcription"
