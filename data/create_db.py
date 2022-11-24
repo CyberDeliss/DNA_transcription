@@ -56,22 +56,17 @@ for codon in codons:
             amino.codon_id = codon.id
 
 
-# Later I should change it to import os
-try:
-    f = open("data/my_base.db")
-    f.close()
-except FileNotFoundError:
-    Base.metadata.create_all(engine)
-    with Session() as session:
-        for dna_base in dna_bases:
-            session.add(dna_base)
+Base.metadata.create_all(engine)
+with Session() as session:
+    for dna_base in dna_bases:
+        session.add(dna_base)
 
-        for rna_base in rna_bases:
-            session.add(rna_base)
+    for rna_base in rna_bases:
+        session.add(rna_base)
 
-        for amino in aminos:
-            session.add(amino)
+    for amino in aminos:
+        session.add(amino)
 
-        for codon in codons:
-            session.add(codon)
-        session.commit()
+    for codon in codons:
+        session.add(codon)
+    session.commit()
