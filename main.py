@@ -29,6 +29,6 @@ async def root(dna_string: str = Form()):
 @app.post("/plot/")
 async def root(for_plot_string: str = Form(), step: int = Form()):
     plot_gc_ratio(for_plot_string, step)
-    return {"plot_img": "plot_gc_ratio.png"}
+    return {"plot_img": "images/plot_gc_ratio.png"}
 
 # type to console "uvicorn main:app --reload"
