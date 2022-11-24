@@ -133,3 +133,4 @@ dmypy.json
 *.db
 personal_data
 plot_gc_ratio.png
+data/config.py
