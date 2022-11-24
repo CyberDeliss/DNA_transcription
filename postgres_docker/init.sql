@@ -1,4 +1,4 @@
-CREATE USER test WITH PASSWORD "postgres";
+CREATE USER test;
 CREATE DATABASE dna_transcription;
 
 
