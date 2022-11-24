@@ -1,15 +1,10 @@
 from sqlalchemy.orm import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from data.config import USER, PASSWORD, HOST, PORT, DB_NAME
 
-# replace it to config:
-user = "test"
-password = "test"
-host = "localhost"
-port = "5432"
-db_name = "dna_transcription"
 
-SQLALCHEMY_DATABASE_URL = f"postgresql://{user}:{password}@{host}:{port}/{db_name}"
+SQLALCHEMY_DATABASE_URL = f"postgresql://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB_NAME}"
 
 Base = declarative_base()
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
