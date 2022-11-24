@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+
+  nginx:
+    container_name: nginx
+    build: ./nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/images:/usr/share/nginx/html/images/
