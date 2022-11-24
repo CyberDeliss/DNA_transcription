@@ -10,3 +10,13 @@ services:
       - "443:443"
     volumes:
       - ./nginx/images:/usr/share/nginx/html/images/
+
+  db:
+    container_name: postgres
+    build:
+      context: ./postgres_docker
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
