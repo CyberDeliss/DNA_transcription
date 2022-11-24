@@ -77,7 +77,7 @@ def plot_gc_ratio(genome: str, step: int) -> None:
     create_img(coords)
 
 
-def create_img(coords: list, path=r"plot_gc_ratio.png") -> None:
+def create_img(coords: list, path=r"images/plot_gc_ratio.png") -> None:
     fig, ax = plt.subplots()
 
     x_list = []
