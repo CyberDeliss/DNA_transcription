@@ -11,7 +11,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx/images:/usr/share/nginx/html/images/
+      - ./nginx/images/:/usr/share/nginx/html/images/
 #    expose:
 #      - 80
 #      - 443
@@ -40,7 +40,7 @@ services:
       context: ./
       dockerfile: Dockerfile
     volumes:
-      - ./nginx/images:/code/images/
+      - ./nginx/images/:/code/images/
     depends_on:
       - db
 #    expose:
