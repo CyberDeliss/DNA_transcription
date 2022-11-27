@@ -53,11 +53,11 @@ class TestConvertDNAtoRNA(unittest.TestCase):
         self.assertTrue(actual == expected, f"{actual}. But should be {expected}")
 
     def test_contains_invalid_letters(self):
-        dna_string = ""
-        expexted = ""
-        actual = convert_dna_to_rna(db, dna_string)
+        dna_string = "cvgbhjnkpARTREDopoiuy6789/.*64n cvbj"
+        expected = WRONG_MESSAGE
+        actual = convert_dna_to_rna(self.db, dna_string)
 
-        self.assertTrue(actual == expexted, f"Should be {expexted}")
+        self.assertTrue(actual == expected, f"Should be {expected}")
 
     def test_a_lot_of_letters(self):
         dna_string = ""
