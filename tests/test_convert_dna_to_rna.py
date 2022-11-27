@@ -1,6 +1,6 @@
 import unittest
-from unittest.mock import patch, Mock
-from data.base_classes import convert_dna_to_rna, check_dna_string
+from unittest.mock import patch
+from data.base_classes import convert_dna_to_rna
 
 DNA_LETTER_CONVERT = {
     "A": "A",
@@ -8,11 +8,9 @@ DNA_LETTER_CONVERT = {
     "G": "G",
     "T": "U"
 }
+
 WRONG_MESSAGE = "Your DNA string is wrong"
 EMPTY_MESSAGE = "Your DNA string is empty"
-# mock = Mock()
-# mock.method.return_value = [3, 2]
-# print(mock.method())
 
 
 class TestConvertDNAtoRNA(unittest.TestCase):
@@ -80,7 +78,6 @@ class TestConvertDNAtoRNA(unittest.TestCase):
             mocked_rna_letter.side_effect = [DNA_LETTER_CONVERT[dna.title()] for dna in dna_string]
             actual = convert_dna_to_rna(self.db, dna_string)
         self.assertTrue(actual == expected, f"{actual}. But should be {expected}")
-
 
 
 if __name__ == '__main__':
