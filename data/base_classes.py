@@ -55,14 +55,14 @@ class Codons(Base):
         return f'{self.name}'
 
 
-def convert_dna_letter_to_rna_letter(db: Session, dna_letter: str) -> RnaBase:
+def convert_dna_letter_to_rna_letter(db: Session, dna_letter: str) -> str:
     """
     :param db: The session, which was opened
     :param dna_letter: one letter from DNA string
 
-    :return: rna as RnaBase object
+    :return: rna as str
     """
-    return db.execute(select(RnaBase).join_from(DnaBase, RnaBase).filter(DnaBase.name == dna_letter)).scalar()
+    return db.execute(select(RnaBase).join_from(DnaBase, RnaBase).filter(DnaBase.name == dna_letter)).scalar().name
 
 
 def convert_codon_to_amino(db: Session, codon: str) -> AminoAcids:
@@ -78,9 +78,12 @@ def convert_codon_to_amino(db: Session, codon: str) -> AminoAcids:
 
 def convert_dna_to_rna(db: Session, dna_string: str) -> str:
     result_str = ""
+    # if check_dna_string(dna_string):
     for dna in dna_string:
-        result_str += convert_dna_letter_to_rna_letter(db, dna).name
+        result_str += convert_dna_letter_to_rna_letter(db, dna)
     return result_str
+    # else:
+    #     return "Your DNA string is wrong"
 
 
 def convert_rna_to_protein(db: Session, rna_string: str) -> str:
@@ -101,3 +104,9 @@ def convert_rna_to_protein(db: Session, rna_string: str) -> str:
 # print(convert_codon_to_amino(Session(), "UGC").full_name)
 # print(convert_dna_to_rna(Session(), "ATTTGGCTACTAACAATCTA"))
 # print(convert_rna_to_protein(Session(), "GUUGUAAUGGCCUACAUUA"))
+
+def check_dna_string(dna_string: str) -> bool:
+    pass
+
+def check_rna_string(dna_string: str) -> bool:
+    pass
