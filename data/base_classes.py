@@ -78,12 +78,12 @@ def convert_codon_to_amino(db: Session, codon: str) -> AminoAcids:
 
 def convert_dna_to_rna(db: Session, dna_string: str) -> str:
     result_str = ""
-    # if check_dna_string(dna_string):
-    for dna in dna_string:
-        result_str += convert_dna_letter_to_rna_letter(db, dna)
-    return result_str
-    # else:
-    #     return "Your DNA string is wrong"
+    if check_dna_string(dna_string.upper()):
+        for dna in dna_string:
+            result_str += convert_dna_letter_to_rna_letter(db, dna)
+        return result_str
+    else:
+        return "Your DNA string is wrong"
 
 
 def convert_rna_to_protein(db: Session, rna_string: str) -> str:
@@ -105,8 +105,10 @@ def convert_rna_to_protein(db: Session, rna_string: str) -> str:
 # print(convert_dna_to_rna(Session(), "ATTTGGCTACTAACAATCTA"))
 # print(convert_rna_to_protein(Session(), "GUUGUAAUGGCCUACAUUA"))
 
+
 def check_dna_string(dna_string: str) -> bool:
-    pass
+    return set(dna_string) == set("ACTG")
+
 
 def check_rna_string(dna_string: str) -> bool:
     pass
