@@ -9,7 +9,7 @@ DNA_LETTER_CONVERT = {
     "T": "U"
 }
 WRONG_MESSAGE = "Your DNA string is wrong"
-
+EMPTY_MESSAGE = "Your DNA string is empty"
 # mock = Mock()
 # mock.method.return_value = [3, 2]
 # print(mock.method())
@@ -73,13 +73,13 @@ class TestConvertDNAtoRNA(unittest.TestCase):
             actual = convert_dna_to_rna(self.db, dna_string)
         self.assertTrue(actual == expected, f"{actual}. But should be {expected}")
 
-    def test_too_few_letters(self):
+    def test_empty_string(self):
         dna_string = ""
-        expexted = ""
-        actual = convert_dna_to_rna(db, dna_string)
-
-        self.assertTrue(actual == expexted, f"Should be {expexted}")
-
+        expected = EMPTY_MESSAGE
+        with patch('data.base_classes.convert_dna_letter_to_rna_letter') as mocked_rna_letter:
+            mocked_rna_letter.side_effect = [DNA_LETTER_CONVERT[dna.title()] for dna in dna_string]
+            actual = convert_dna_to_rna(self.db, dna_string)
+        self.assertTrue(actual == expected, f"{actual}. But should be {expected}")
 
 
 
