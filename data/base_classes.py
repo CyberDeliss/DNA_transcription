@@ -55,14 +55,14 @@ class Codons(Base):
         return f'{self.name}'
 
 
-def convert_dna_letter_to_rna_letter(db: Session, dna_letter: str) -> str:
+def convert_dna_letter_to_rna_letter(db: Session, dna_letter: str) -> RnaBase:
     """
     :param db: The session, which was opened
     :param dna_letter: one letter from DNA string
 
-    :return: rna as str
+    :return: rna as RnaBase
     """
-    return db.execute(select(RnaBase).join_from(DnaBase, RnaBase).filter(DnaBase.name == dna_letter)).scalar().name
+    return db.execute(select(RnaBase).join_from(DnaBase, RnaBase).filter(DnaBase.name == dna_letter)).scalar()
 
 
 def convert_codon_to_amino(db: Session, codon: str) -> AminoAcids:
@@ -81,7 +81,7 @@ def convert_dna_to_rna(db: Session, dna_string: str) -> str:
     if dna_string:
         if check_dna_string(dna_string.upper()):
             for dna in dna_string:
-                result_str += convert_dna_letter_to_rna_letter(db, dna)
+                result_str += convert_dna_letter_to_rna_letter(db, dna).name
             return result_str
         return "Your DNA string is wrong"
     return "Your DNA string is empty"
