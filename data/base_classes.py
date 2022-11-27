@@ -78,8 +78,9 @@ def convert_codon_to_amino(db: Session, codon: str) -> AminoAcids:
 
 def convert_dna_to_rna(db: Session, dna_string: str) -> str:
     result_str = ""
+    dna_string = dna_string.upper()
     if dna_string:
-        if check_dna_string(dna_string.upper()):
+        if check_dna_string(dna_string):
             for dna in dna_string:
                 result_str += convert_dna_letter_to_rna_letter(db, dna).name
             return result_str
@@ -99,8 +100,9 @@ def convert_rna_to_protein(db: Session, rna_string: str) -> str:
     :return: protein string
     """
     result_string = ""
+    rna_string = rna_string.upper()
     if rna_string:
-        if check_rna_string(rna_string.upper()):
+        if check_rna_string(rna_string):
             codons = get_codons(rna_string)
             for codon in codons:
                 if len(codon) == 3:
