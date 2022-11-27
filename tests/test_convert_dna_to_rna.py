@@ -37,34 +37,6 @@ class TestConvertDNAtoRNA(unittest.TestCase):
         actual = convert_dna_to_rna(self.db, dna_string)
         self.assertTrue(actual == expected, f"Should be {expected}")
 
-    # def test_dna_lower(self):
-    # """
-    # it does not make sense
-    # """
-    #     dna_string = "gctaactaacatctttggcactgtt"
-    #     expected = "GCUAACUAACAUCUUUGGCACUGUU"
-    #
-    #     rna_list = self.get_rna_list(dna_string)
-    #
-    #     with patch('data.base_classes.convert_dna_letter_to_rna_letter') as mocked_rna_letter:
-    #         mocked_rna_letter.side_effect = [rna for rna in rna_list]
-    #         actual = convert_dna_to_rna(self.db, dna_string)
-    #     self.assertTrue(actual == expected, f"{actual}. But should be {expected}")
-    #
-    # def test_dna_register_is_various(self):
-    #     dna_string = "gctaactaaCAtcTTtGgcactgtt"
-    #     expected = "GCUAACUAACAUCUUUGGCACUGUU"
-    #
-    #     """
-    #     it does not make sense too
-    #     """
-    #     rna_list = self.get_rna_list(dna_string)
-    #
-    #     with patch('data.base_classes.convert_dna_letter_to_rna_letter') as mocked_rna_letter:
-    #         mocked_rna_letter.side_effect = [rna for rna in rna_list]
-    #         actual = convert_dna_to_rna(self.db, dna_string)
-    #     self.assertTrue(actual == expected, f"{actual}. But should be {expected}")
-
     def test_contains_invalid_letters(self):
         dna_string = "cvgbhjnkpARTREDopoiuy6789/.*64n cvbj"
         expected = WRONG_MESSAGE
