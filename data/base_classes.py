@@ -83,10 +83,8 @@ def convert_dna_to_rna(db: Session, dna_string: str) -> str:
             for dna in dna_string:
                 result_str += convert_dna_letter_to_rna_letter(db, dna)
             return result_str
-        else:
-            return "Your DNA string is wrong"
-    else:
-        return "Your DNA string is empty"
+        return "Your DNA string is wrong"
+    return "Your DNA string is empty"
 
 
 def convert_rna_to_protein(db: Session, rna_string: str) -> str:
@@ -96,22 +94,21 @@ def convert_rna_to_protein(db: Session, rna_string: str) -> str:
     :return: protein string
     """
     result_string = ""
-    n = 3
-    parts = [rna_string[i:i + n] for i in range(0, len(rna_string), n)]
-    for codon in parts:
-        if len(codon) == 3:
-            result_string += convert_codon_to_amino(db, codon).short_name
-    return result_string
-#
-# print(convert_dna_letter_to_rna_letter(Session(), "T").name)
-# print(convert_codon_to_amino(Session(), "UGC").full_name)
-# print(convert_dna_to_rna(Session(), "ATTTGGCTACTAACAATCTA"))
-# print(convert_rna_to_protein(Session(), "GUUGUAAUGGCCUACAUUA"))
+    if rna_string:
+        if check_rna_string(rna_string.upper()):
+            n = 3
+            parts = [rna_string[i:i + n] for i in range(0, len(rna_string), n)]
+            for codon in parts:
+                if len(codon) == 3:
+                    result_string += convert_codon_to_amino(db, codon).short_name
+            return result_string
+        return f"Your RNA string is wrong"
+    return "Your RNA string is empty"
 
 
 def check_dna_string(dna_string: str) -> bool:
     return set(dna_string) == set("ACTG")
 
 
-def check_rna_string(dna_string: str) -> bool:
-    pass
+def check_rna_string(rna_string: str) -> bool:
+    return set(rna_string) == set("ACUG")
