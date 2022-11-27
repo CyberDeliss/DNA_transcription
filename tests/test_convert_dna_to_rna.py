@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch, Mock
-from data.base_classes import convert_dna_to_rna
+from data.base_classes import convert_dna_to_rna, check_dna_string
 
 DNA_LETTER_CONVERT = {
     "A": "A",
@@ -26,23 +26,25 @@ class TestConvertDNAtoRNA(unittest.TestCase):
         with patch('data.base_classes.convert_dna_letter_to_rna_letter') as mocked_rna_letter:
             mocked_rna_letter.side_effect = [DNA_LETTER_CONVERT[dna] for dna in dna_string]
             actual = convert_dna_to_rna(self.db, dna_string)
-
-        print([DNA_LETTER_CONVERT[dna] for dna in dna_string])
         self.assertTrue(actual == expected, f"{actual}. But should be {expected}")
 
-    def test_dna_no_str(self):
+    def test_dna_has_numeric_symbols(self):
         dna_string = "123456789"
-        expexted = WRONG_MESSAGE
-        actual = convert_dna_to_rna(db, dna_string)
-
-        self.assertTrue(actual == expexted, f"Should be {expexted}")
+        expected = WRONG_MESSAGE
+        actual = convert_dna_to_rna(self.db, dna_string)
+        self.assertTrue(actual == expected, f"Should be {expected}")
 
     def test_dna_lower(self):
-        dna_string = ""
-        expexted = ""
-        actual = convert_dna_to_rna(db, dna_string)
+        dna_string = "gctaactaacatctttggcactgtt"
+        expected = "GCUAACUAACAUCUUUGGCACUGUU"
 
-        self.assertTrue(actual == expexted, f"Should be {expexted}")
+        with patch('data.base_classes.convert_dna_letter_to_rna_letter') as mocked_rna_letter:
+            mocked_rna_letter.side_effect = [DNA_LETTER_CONVERT[dna.title()] for dna in dna_string]
+            actual = convert_dna_to_rna(self.db, dna_string)
+        self.assertTrue(actual == expected, f"{actual}. But should be {expected}")
+
+
+        self.assertTrue(actual == expected, f"Should be {expected}")
 
     def test_dna_register_is_various(self):
         dna_string = ""
@@ -71,6 +73,8 @@ class TestConvertDNAtoRNA(unittest.TestCase):
         actual = convert_dna_to_rna(db, dna_string)
 
         self.assertTrue(actual == expexted, f"Should be {expexted}")
+
+
 
 
 if __name__ == '__main__':
