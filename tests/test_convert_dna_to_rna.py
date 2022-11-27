@@ -43,15 +43,14 @@ class TestConvertDNAtoRNA(unittest.TestCase):
             actual = convert_dna_to_rna(self.db, dna_string)
         self.assertTrue(actual == expected, f"{actual}. But should be {expected}")
 
-
-        self.assertTrue(actual == expected, f"Should be {expected}")
-
     def test_dna_register_is_various(self):
-        dna_string = ""
-        expexted = ""
-        actual = convert_dna_to_rna(db, dna_string)
+        dna_string = "gctaactaaCAtcTTtGgcactgtt"
+        expected = "GCUAACUAACAUCUUUGGCACUGUU"
 
-        self.assertTrue(actual == expexted, f"Should be {expexted}")
+        with patch('data.base_classes.convert_dna_letter_to_rna_letter') as mocked_rna_letter:
+            mocked_rna_letter.side_effect = [DNA_LETTER_CONVERT[dna.title()] for dna in dna_string]
+            actual = convert_dna_to_rna(self.db, dna_string)
+        self.assertTrue(actual == expected, f"{actual}. But should be {expected}")
 
     def test_contains_invalid_letters(self):
         dna_string = ""
