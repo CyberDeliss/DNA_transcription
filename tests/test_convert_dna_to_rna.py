@@ -61,10 +61,17 @@ class TestConvertDNAtoRNA(unittest.TestCase):
 
     def test_a_lot_of_letters(self):
         dna_string = ""
-        expexted = ""
-        actual = convert_dna_to_rna(db, dna_string)
+        for _ in range(0, 10000):
+            dna_string += "ACTG"
 
-        self.assertTrue(actual == expexted, f"Should be {expexted}")
+        expected = ""
+        for _ in range(0, 10000):
+            expected += "ACUG"
+
+        with patch('data.base_classes.convert_dna_letter_to_rna_letter') as mocked_rna_letter:
+            mocked_rna_letter.side_effect = [DNA_LETTER_CONVERT[dna.title()] for dna in dna_string]
+            actual = convert_dna_to_rna(self.db, dna_string)
+        self.assertTrue(actual == expected, f"{actual}. But should be {expected}")
 
     def test_too_few_letters(self):
         dna_string = ""
