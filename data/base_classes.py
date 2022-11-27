@@ -87,6 +87,11 @@ def convert_dna_to_rna(db: Session, dna_string: str) -> str:
     return "Your DNA string is empty"
 
 
+def get_codons(rna_string: str) -> list:
+    n = 3
+    return [rna_string[i:i + n].upper() for i in range(0, len(rna_string), n)]
+
+
 def convert_rna_to_protein(db: Session, rna_string: str) -> str:
     """
     :param db: The session, which was opened
@@ -96,9 +101,8 @@ def convert_rna_to_protein(db: Session, rna_string: str) -> str:
     result_string = ""
     if rna_string:
         if check_rna_string(rna_string.upper()):
-            n = 3
-            parts = [rna_string[i:i + n] for i in range(0, len(rna_string), n)]
-            for codon in parts:
+            codons = get_codons(rna_string)
+            for codon in codons:
                 if len(codon) == 3:
                     result_string += convert_codon_to_amino(db, codon).short_name
             return result_string
