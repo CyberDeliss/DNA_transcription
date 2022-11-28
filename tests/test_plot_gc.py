@@ -101,6 +101,18 @@ class TestPlotGC(unittest.TestCase):
 
         self.assertFalse(actual, f"{actual}. But should be {expected}")
 
+    def test_step_too_big(self):
+        dna_string = "ATTTGGCTACTAACAATCTAGTTGTAATGGCCTACATTACAGGTGG"\
+                     "TGTTGTTCAGTTGCTAACTAACGCTAACTAACATCTTTGGCACTGTTT"\
+                     "ATGAAAAACTCAAACCCGTCCTTGATTGGCTTGAAGAGAAGTTT"
+        step = 137
+        expected = True
+        with patch('utilities.create_img') as mocked_create_img:
+            mocked_create_img.return_value = True
+            actual = plot_gc_ratio(dna_string, step)
+
+        self.assertTrue(actual, f"{actual}. But should be {expected}")
+
 
 if __name__ == '__main__':
     unittest.main()
