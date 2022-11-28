@@ -17,7 +17,7 @@ app.add_middleware(
 )
 
 # ATTTGGCTACTAACAATCTAGTTGTAATGGCCTACATTACAGGTGGTGTTGTTCAGTTGCTAACTAACGCTAACTAACATCTTTGGCACTGTTTATGAAAAACTCAAACCCGTCCTTGATTGGCTTGAAGAGAAGTTT
-
+# "atttggctactaacaatctagttgtaatggcctacattacaggtggtgttgttcagttgctaactaacgctaactaacatctttggcactgtttatgaaaaactcaaacccgtccttgattggcttgaagagaagttt"
 
 @app.post("/dna_to_rna/")
 async def root(dna_string: str = Form()):
@@ -31,6 +31,6 @@ async def root(for_plot_string: str = Form(), step: int = Form()):
     if plot_gc_ratio(for_plot_string, step):
         return {"plot_img": "images/plot_gc_ratio.png"}
     else:
-        return {"plot_img": "images/wrong.jpg"}
+        return {"plot_img": "images/wrong.png"}
 
 # type to console "uvicorn main:app --reload"
