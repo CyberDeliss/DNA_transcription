@@ -51,13 +51,22 @@ function makeRequestImg() {
 function showImage() {
     if (httpRequestPlot.readyState === XMLHttpRequest.DONE) {
         if (httpRequestPlot.status === 200) {
-            let json = JSON.parse(httpRequestPlot.responseText)
+            let json = JSON.parse(httpRequestPlot.responseText);
 
-            let plot_img = document.getElementById("plot_img")
-            plot_img.src = json.plot_img + "?t=" + new Date().getTime()
+            let plot_img = document.getElementById("plot_img");
+            plot_img.src = json.plot_img + "?t=" + new Date().getTime();
         } else {
-            console.log("There was a problem with the request.");
-            alert("There was a problem with the request.");
+            let step_input = document.getElementById("step_id").value;
+            let gc_dna_input = document.getElementById("gc_dna").value;
+
+            if (gc_dna_input.length === 0 || step_input.length === 0) {
+                console.log("DNA or Step input is empty.");
+                alert("DNA or Step input is empty.");
+            }
+            else {
+                console.log("There was a problem with the request.");
+                alert("There was a problem with the request.");
+            }
         }
     }
 }
