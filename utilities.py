@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from data.base_classes import check_dna_string
 
 
 def convert_dna_to_rna(dna_string: str) -> str:
@@ -40,7 +41,7 @@ def gc_content(g_selected: int, c_selected: int, len_selected: int) -> int:
     return int(result)
 
 
-def plot_gc_ratio(genome: str, step: int) -> None:
+def plot_gc_ratio(genome: str, step=int(100)) -> bool:
     """
     This function plots G-C ratio in a DNA molecule has
 
@@ -54,27 +55,33 @@ def plot_gc_ratio(genome: str, step: int) -> None:
             denoting a width of a bin with a default value of 100 characters.
 
     Returns:
-        None
+        True if ok
+        False if something is wrong
 
     Result:
         .png | .jpeg file.
         graph
     """
-    x_coord = 0
-    coords = []
+    if check_all_for_plot(genome, step):
+        genome = genome.upper()
+        x_coord = 0
+        coords = []
 
-    parts = [genome[i:i + step] for i in range(0, len(genome), step)]
-    for genome_selected in parts:
-        count_g = 0
-        count_c = 0
-        for letter in genome_selected:
-            if letter.title() == "G":
-                count_g += 1
-            if letter.title() == "C":
-                count_c += 1
-        coords.append((x_coord, gc_content(count_g, count_c, len(genome_selected))))
-        x_coord += step
-    create_img(coords)
+        parts = [genome[i:i + step] for i in range(0, len(genome), step)]
+        for genome_selected in parts:
+            count_g = 0
+            count_c = 0
+            for letter in genome_selected:
+                if letter.title() == "G":
+                    count_g += 1
+                if letter.title() == "C":
+                    count_c += 1
+            coords.append((x_coord, gc_content(count_g, count_c, len(genome_selected))))
+            x_coord += step
+        create_img(coords)
+        return True
+    else:
+        return False
 
 
 def create_img(coords: list, path=r"images/plot_gc_ratio.png") -> None:
@@ -96,3 +103,21 @@ def create_img(coords: list, path=r"images/plot_gc_ratio.png") -> None:
 
     ax.grid()
     fig.savefig(path)
+
+
+def check_all_for_plot(genome: str, step: int) -> bool:
+    """
+    :param genome:
+    :param step:
+    :return: True if ok
+    """
+    if type(step) != int:
+        return False
+    if type(genome) != str:
+        return False
+    if step <= 0:
+        return False
+    if not (check_dna_string(genome)):
+        return False
+
+    return True
