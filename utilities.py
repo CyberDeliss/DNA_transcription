@@ -41,7 +41,7 @@ def gc_content(g_selected: int, c_selected: int, len_selected: int) -> int:
     return int(result)
 
 
-def plot_gc_ratio(genome: str, step=int(100)) -> bool:
+def plot_gc_ratio(genome: str, step=100) -> bool:
     """
     This function plots G-C ratio in a DNA molecule has
 
@@ -117,7 +117,7 @@ def check_all_for_plot(genome: str, step: int) -> bool:
         return False
     if step <= 0:
         return False
-    if not (check_dna_string(genome)):
+    if not (check_dna_string(genome.upper())):
         return False
 
     return True
