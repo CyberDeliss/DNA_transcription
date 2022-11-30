@@ -3,12 +3,13 @@
 
 ### Project Description
 
-- [x] Html page 
+- [x] Html page
 - [x] Transcription of DNA to RNA and RNA to amino
 - [x] Written classes for the database
 - [x] Function that plots G-C ratio in a DNA molecule has and saves the resulting graph to a .png file.
 - [x] Docker
-- [ ] Unit tests
+- [x] Unit tests
+- [ ] command line input
 
 ### How to Install and Run the Project
 
@@ -16,7 +17,7 @@ pass
 
 ### How to Use the Project
 
-1. from this directory type this to concole:
+1. from this directory type this to console:
 
     `docker-compose up --build`
 
