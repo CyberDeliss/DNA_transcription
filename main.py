@@ -2,8 +2,7 @@ from fastapi import FastAPI, Form
 from fastapi.middleware.cors import CORSMiddleware
 from data.base_classes import convert_dna_to_rna, convert_rna_to_protein
 from data.db import Session
-# import data.create_db
-from utilities import plot_gc_ratio, check_all_for_plot
+from utilities import plot_gc_ratio
 
 app = FastAPI()
 
@@ -16,8 +15,6 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-# ATTTGGCTACTAACAATCTAGTTGTAATGGCCTACATTACAGGTGGTGTTGTTCAGTTGCTAACTAACGCTAACTAACATCTTTGGCACTGTTTATGAAAAACTCAAACCCGTCCTTGATTGGCTTGAAGAGAAGTTT
-# "atttggctactaacaatctagttgtaatggcctacattacaggtggtgttgttcagttgctaactaacgctaactaacatctttggcactgtttatgaaaaactcaaacccgtccttgattggcttgaagagaagttt"
 
 @app.post("/dna_to_rna/")
 async def root(dna_string: str = Form()):
@@ -32,5 +29,3 @@ async def root(for_plot_string: str = Form(), step: int = Form()):
         return {"plot_img": "images/plot_gc_ratio.png"}
     else:
         return {"plot_img": "images/wrong.png"}
-
-# type to console "uvicorn main:app --reload"
