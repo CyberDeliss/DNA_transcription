@@ -81,6 +81,15 @@ class TestConvertDNAtoRNA(unittest.TestCase):
             actual = convert_rna_to_protein(self.db, rna_string)
         self.assertTrue(actual == expected, f"{actual}. But should be {expected}")
 
+    def test_rna_contain_not_all_letter(self):
+        rna_string = "AUU"
+        expected = "I"
+
+        with patch('data.base_classes.convert_codon_to_amino') as mocked_rna_letter:
+            mocked_rna_letter.side_effect = create_aminos(rna_string)
+            actual = convert_rna_to_protein(self.db, rna_string)
+        self.assertTrue(actual == expected, f"{actual}. But should be {expected}")
+
 
 def create_aminos(rna_string: str) -> list:
     codons = get_codons(rna_string)
