@@ -1,5 +1,5 @@
 import unittest
-from utilities import plot_gc_ratio
+from utilities import plot_gc_ratio, gc_content
 from unittest.mock import patch
 
 
@@ -107,6 +107,17 @@ class TestPlotGC(unittest.TestCase):
                      "ATGAAAAACTCAAACCCGTCCTTGATTGGCTTGAAGAGAAGTTT"
         step = 137
         expected = True
+        with patch('utilities.create_img') as mocked_create_img:
+            mocked_create_img.return_value = True
+            actual = plot_gc_ratio(dna_string, step)
+
+        self.assertTrue(actual, f"{actual}. But should be {expected}")
+
+    def test_step_longer_len_dna(self):
+        dna_string = "ATGAAAAACTCAAACCCGTCCTTGATTGGCTTGAAGAGAAGTTT"
+        step = 45
+        expected = True
+
         with patch('utilities.create_img') as mocked_create_img:
             mocked_create_img.return_value = True
             actual = plot_gc_ratio(dna_string, step)
