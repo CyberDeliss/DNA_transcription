@@ -12,13 +12,8 @@ services:
       - "443:443"
     volumes:
       - ./nginx/images/:/usr/share/nginx/html/images/
-#    expose:
-#      - 80
-#      - 443
     depends_on:
       - fastapi
-    networks:
-      - my_network
 
   db:
     container_name: postgres
@@ -31,8 +26,6 @@ services:
       - 5432
     ports:
       - "5432:5432"
-    networks:
-      - my_network
 
   fastapi:
     container_name: fastapi
@@ -43,13 +36,5 @@ services:
       - ./nginx/images/:/code/images/
     depends_on:
       - db
-#    expose:
-#      - 8000
     ports:
       - "8000:8000"
-    networks:
-      - my_network
-
-networks:
-  my_network:
-    driver: bridge
