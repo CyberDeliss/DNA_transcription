@@ -3,6 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from data.base_classes import convert_dna_to_rna, convert_rna_to_protein
 from data.db import Session
 from utilities import plot_gc_ratio
+from data.create_db import filling_base
+
+filling_base()
 
 app = FastAPI()
 
