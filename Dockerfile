@@ -19,5 +19,7 @@ COPY data /code/data
 
 COPY utilities.py /code/utilities.py
 
+COPY command_line.py /code/command_line.py
+
 ENTRYPOINT ["/code/entrypoint.sh"]
 
