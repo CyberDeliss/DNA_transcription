@@ -64,7 +64,11 @@ def plot_gc_ratio(genome: str, step=100) -> bool:
     """
     if check_all_for_plot(genome, step):
         genome = genome.upper()
-        x_coord = 0
+        if step <= len(genome):
+            x_coord = step
+        else:
+            x_coord = len(genome)
+
         coords = []
 
         parts = [genome[i:i + step] for i in range(0, len(genome), step)]
@@ -78,6 +82,8 @@ def plot_gc_ratio(genome: str, step=100) -> bool:
                     count_c += 1
             coords.append((x_coord, gc_content(count_g, count_c, len(genome_selected))))
             x_coord += step
+            if x_coord > len(genome):
+                x_coord = len(genome)
         create_img(coords)
         return True
     else:
@@ -87,8 +93,8 @@ def plot_gc_ratio(genome: str, step=100) -> bool:
 def create_img(coords: list, path=r"images/plot_gc_ratio.png") -> None:
     fig, ax = plt.subplots()
 
-    x_list = []
-    y_list = []
+    x_list = [0]
+    y_list = [0]
     for x, y in coords:
         x_list.append(x)
         y_list.append(y)
