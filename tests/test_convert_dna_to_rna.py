@@ -71,7 +71,7 @@ class TestConvertDNAtoRNA(unittest.TestCase):
             actual = convert_dna_to_rna(self.db, dna_string)
         self.assertTrue(actual == expected, f"{actual}. But should be {expected}")
 
-    def test_att(self):
+    def test_dna_contain_not_all_letter(self):
         dna_string = "ATT"
         expected = "AUU"
 
