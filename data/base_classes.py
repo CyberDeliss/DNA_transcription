@@ -113,8 +113,18 @@ def convert_rna_to_protein(db: Session, rna_string: str) -> str:
 
 
 def check_dna_string(dna_string: str) -> bool:
-    return set(dna_string) == set("ACTG")
+    condition = True
+    for letter in set(dna_string):
+        if not (letter in set("ACTG")):
+            condition = False
+            break
+    return condition
 
 
 def check_rna_string(rna_string: str) -> bool:
-    return set(rna_string) == set("ACUG")
+    condition = True
+    for letter in set(rna_string):
+        if not (letter in set("ACUG")):
+            condition = False
+            break
+    return condition
