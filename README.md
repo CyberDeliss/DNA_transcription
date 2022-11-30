@@ -12,10 +12,14 @@
 - [x] command line input
 
 ### How to Use the Project
+0. (optional):
+
+   `sudo systemctl stop postgresql`
+
 
 1. from this directory type this to console:
 
-    `docker-compose up --build`
+    `sudo docker-compose up --build`
 
 
 2. open this page in your browser
@@ -23,7 +27,7 @@
     `http://localhost/index.html`
 
 
-3. type DNA to **DNA line**
+3. type DNA (for example "ATTTGGCTACTAACAATCTA") to **DNA line**
 4. push the button "GET PROTEIN"
 5. scroll
 6. type DNA to **DNA textarea** and step to the **Step line**
