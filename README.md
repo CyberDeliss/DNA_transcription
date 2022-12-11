@@ -14,18 +14,21 @@
 ### How to Use the Project
 0. (optional):
 
-   `sudo systemctl stop postgresql`
-
+```
+sudo systemctl stop postgresql
+```
 
 1. from this directory type this to console:
 
-    `sudo docker-compose up --build`
-
+```
+sudo docker-compose up --build
+```
 
 2. open this page in your browser
 
-    `http://localhost/index.html`
-
+```
+http://localhost/index.html
+```
 
 3. type DNA (for example "ATTTGGCTACTAACAATCTA") to **DNA line**
 4. push the button "GET PROTEIN"
@@ -37,26 +40,62 @@
 
 1. from this directory type this to console:
 
-`sudo docker-compose up --build --d`
+    ```
+    sudo docker-compose up --build --d
+    ```
 
 2. type this here for open project command line:
 
-`docker-compose exec fastapi bash`
+    ```
+    docker-compose exec fastapi bash
+    ```
 
 3. type this for run functions:
-    1. for "convert_dna_to_rna": `python3 command_line.py -dna <your string DNA>`
-    2. for "convert_rna_to_protein": `python3 command_line.py -rna <your string RNA>`
-    3. for "plot_gc_ratio": `python3 command_line.py -p <your string DNA> -s <step>`
-       or `python3 command_line.py -p <your string DNA>` (default step is 100)
-        1. if True, open "images/plot_gc_ratio.png"
-        2. if False, open "images/wrong.png"
+
+   for _convert_dna_to_rna_:
+
+   ```
+    python3 command_line.py -dna <your string DNA>
+    ```
+
+   for _convert_rna_to_protein_:
+    ```
+    python3 command_line.py -rna <your string RNA>
+    ```
+
+   for _plot_gc_ratio_ (default step is 100):
+    ```
+    python3 command_line.py -p <your string DNA> -s <step>
+    ```
+
+    or
+    ```
+    python3 command_line.py -p <your string DNA>
+    ```
+
+   If _plot_gc_ratio_ is **True**, open "images/plot_gc_ratio.png"
+
+   If _plot_gc_ratio_ is **False**, open "images/wrong.png"
 
 [//]: # (python3 command_line.py -p ATTTGGCTACTAACAATCTAGTTGTAATGGCCTACA -s 2 )
 
 4. exit from project command line
 
-`exit`
-
+    ```
+    exit
+    ```
 5. stop docker
 
-`docker-compose stop`
+    ```
+    docker-compose stop
+    ```
+
+### How to work with the Project:
+
+Create venv, install requirements
+
+```
+$ python3 -m venv venv
+$ source venv/bin/activate
+(venv)$  pip install -r requirements.txt
+```
