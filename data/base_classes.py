@@ -62,7 +62,8 @@ def convert_dna_letter_to_rna_letter(db: Session, dna_letter: str) -> RnaBase:
 
     :return: rna as RnaBase
     """
-    rna_base = db.execute(select(RnaBase).join_from(DnaBase, RnaBase).filter(DnaBase.name == dna_letter)).scalar()
+    rna_base = db.execute(select(RnaBase).join_from(DnaBase, RnaBase)
+                          .filter(DnaBase.name == dna_letter)).scalar()
     return rna_base
 
 
@@ -74,11 +75,21 @@ def convert_codon_to_amino(db: Session, codon: str) -> AminoAcids:
     :return: amino as AminoAcids object
     """
     if len(codon) == 3:
-        amino = db.execute(select(AminoAcids).join_from(Codons, AminoAcids).filter(Codons.name == codon)).scalar()
+        amino = db.execute(select(AminoAcids).join_from(Codons, AminoAcids)
+                           .filter(Codons.name == codon)).scalar()
         return amino
 
 
 def convert_dna_to_rna(db: Session, dna_string: str) -> str:
+    """
+    Convert DNA-string to RNA-string. Use database relationship
+    Args:
+        db: opened Session in database
+        dna_string: DNA as str
+
+    Returns: str errors: empty message or wrong message or
+             RNA as str
+    """
     if not dna_string:
         return "Your DNA string is empty"
 
@@ -93,8 +104,18 @@ def convert_dna_to_rna(db: Session, dna_string: str) -> str:
 
 
 def get_codons(rna_string: str) -> list:
+    """
+    Return codons as list from RNA string
+    Args:
+        rna_string: RNA as str
+
+    Returns:
+        codon_list: list consist codons
+
+    """
     n = 3
-    return [rna_string[i:i + n].upper() for i in range(0, len(rna_string), n)]
+    codon_list = [rna_string[i:i + n].upper() for i in range(0, len(rna_string), n)]
+    return codon_list
 
 
 def convert_rna_to_protein(db: Session, rna_string: str) -> str:
@@ -115,22 +136,38 @@ def convert_rna_to_protein(db: Session, rna_string: str) -> str:
             if len(codon) == 3:
                 result_string += convert_codon_to_amino(db, codon).short_name
         return result_string
-    return f"Your RNA string is wrong"
+    return "Your RNA string is wrong"
 
 
 def check_dna_string(dna_string: str) -> bool:
+    """
+    Check dna_string consist "ACTG" only
+    Args:
+        dna_string:
+
+    Returns: true or false
+    """
     condition = True
     for letter in set(dna_string):
-        if not (letter in set("ACTG")):
-            condition = False
-            break
+        if letter in set("ACTG"):
+            continue
+        condition = False
+        break
     return condition
 
 
 def check_rna_string(rna_string: str) -> bool:
+    """
+    Check rna_string consist "ACUG" only
+    Args:
+        rna_string:
+
+    Returns: true or false
+    """
     condition = True
     for letter in set(rna_string):
-        if not (letter in set("ACUG")):
-            condition = False
-            break
+        if letter in set("ACUG"):
+            continue
+        condition = False
+        break
     return condition
